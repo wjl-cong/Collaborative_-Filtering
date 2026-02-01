@@ -98,7 +98,7 @@ $$
 
 * **代码位置**：`build_user_item_matrix` 函数
 * **数学表示**：
-  构建矩阵 $R_{m \\times n}$，其中 $m$ 为用户数，$n$ 为物品数。
+  构建矩阵 $R_{m \\times n}$，其中 `m` 为用户数，`n` 为物品数。
 
 $$
 R = \\begin{bmatrix}
