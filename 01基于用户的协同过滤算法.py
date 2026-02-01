@@ -541,7 +541,7 @@ def plot_similarity_heatmap(similarity_df: pd.DataFrame, output_dir: Path) -> No
     plt.figure(figsize=(10, 9))
     
     # 绘制热力图
-    sns.heatmap(
+    ax = sns.heatmap(
         sample_matrix, 
         cmap="RdYlBu_r", # 红-黄-蓝 渐变，冷暖色调对比明显
         center=0,        # 居中对齐
@@ -550,9 +550,24 @@ def plot_similarity_heatmap(similarity_df: pd.DataFrame, output_dir: Path) -> No
         cbar_kws={"label": "余弦相似度"}
     )
     
-    plt.title(f"用户相似度矩阵热力图 (随机采样 {sample_count} 用户)", fontweight="bold", pad=20)
-    plt.xlabel("用户 ID", fontweight="bold")
-    plt.ylabel("用户 ID", fontweight="bold")
+    # 尝试设置 colorbar 的字体
+    try:
+        cbar = ax.collections[0].colorbar
+        cbar.set_label("余弦相似度", fontproperties=GLOBAL_FONT_PROP)
+        cbar.ax.yaxis.set_tick_params(labelsize=10) 
+    except Exception:
+        pass
+
+    plt.title(f"用户相似度矩阵热力图 (随机采样 {sample_count} 用户)", fontweight="bold", pad=20, fontproperties=GLOBAL_FONT_PROP)
+    plt.xlabel("用户 ID", fontweight="bold", fontproperties=GLOBAL_FONT_PROP)
+    plt.ylabel("用户 ID", fontweight="bold", fontproperties=GLOBAL_FONT_PROP)
+    
+    # 强制刻度字体 (虽然ID是数字，但也加上以防万一)
+    for label in ax.get_xticklabels():
+        label.set_fontproperties(GLOBAL_FONT_PROP)
+    for label in ax.get_yticklabels():
+        label.set_fontproperties(GLOBAL_FONT_PROP)
+
     
     plt.tight_layout()
     plt.savefig(output_dir / "用户相似度热力图.png", dpi=300, bbox_inches="tight")
