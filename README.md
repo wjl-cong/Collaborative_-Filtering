@@ -78,7 +78,7 @@
 
 * **代码位置**：`behavior_score` 字典
 * **建模公式**：
-  设用户 $u$ 对物品 $i$ 的行为类型为 $b_{ui}$，则评分 $r_{ui}$ 定义为：
+  设用户 `u` 对物品 `i` 的行为类型为 $b_{ui}$，则评分 $r_{ui}$ 定义为：
 
 $$
 r_{ui} = \sum w(b_{ui})
@@ -98,15 +98,15 @@ $$
 
 * **代码位置**：`build_user_item_matrix` 函数
 * **数学表示**：
-  构建矩阵 $R_{m \\times n}$，其中 `m` 为用户数，`n` 为物品数。
+  构建矩阵 $R_{m \times n}$，其中 `m` 为用户数，`n` 为物品数。
 
 $$
-R = \\begin{bmatrix}
-r_{11} & r_{12} & \\cdots & r_{1n} \\\\
-r_{21} & r_{22} & \\cdots & r_{2n} \\\\
-\\vdots & \\vdots & \\ddots & \\vdots \\\\
-r_{m1} & r_{m2} & \\cdots & r_{mn}
-\\end{bmatrix}
+R = \begin{bmatrix}
+r_{11} & r_{12} & \cdots & r_{1n} \\\\
+r_{21} & r_{22} & \cdots & r_{2n} \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
+r_{m1} & r_{m2} & \cdots & r_{mn}
+\end{bmatrix}
 $$
 
   矩阵极其稀疏，未交互项填充为 $0$。
@@ -117,10 +117,10 @@ $$
 
 * **代码位置**：`compute_user_similarity` 函数
 * **核心公式**：
-  设用户 $u$ 和用户 $v$ 的评分向量分别为 $\vec{r}_u$ 和 $\vec{r}_v$，其相似度 $sim(u,v)$ 为：
+  设用户 `u` 和用户 `v` 的评分向量分别为 $\vec{r}_u$ 和 $\vec{r}_v$，其相似度 $\text{sim}(u,v)$ 为：
 
-  $$
-sim(u, v) = \\cos(\\theta) = \\frac{\\vec{r}_u \\cdot \\vec{r}_v}{\\|\\vec{r}_u\\| \\|\\vec{r}_v\\|} = \\frac{\\sum_{i \\in I} r_{ui} r_{vi}}{\\sqrt{\\sum_{i \\in I} r_{ui}^2} \\sqrt{\\sum_{i \\in I} r_{vi}^2}}
+$$
+\text{sim}(u, v) = \cos(\theta) = \frac{\vec{r}_u \cdot \vec{r}_v}{\Vert \vec{r}_u \Vert \Vert \vec{r}_v \Vert} = \frac{\sum_{i \in I} r_{ui} r_{vi}}{\sqrt{\sum_{i \in I} r_{ui}^2} \sqrt{\sum_{i \in I} r_{vi}^2}}
 $$
 
   其中 $I$ 是所有物品的集合。代码直接调用 `sklearn.metrics.pairwise.cosine_similarity` 高效实现矩阵运算。
@@ -131,10 +131,10 @@ $$
 
 * **代码位置**：`generate_recommendations` 函数
 * **步骤详解**：
-  1. **邻居选择**：对于目标用户 $u$，在相似度矩阵中找到相似度最高的 $K$ 个用户，构成邻居集合 $N(u)$。
-  2. **加权预测**：利用邻居对物品 $i$ 的评分 $r_{vi}$，以相似度 $sim(u,v)$ 为权重进行加权平均。
+  1. **邻居选择**：对于目标用户 `u`，在相似度矩阵中找到相似度最高的 `K` 个用户，构成邻居集合 $N(u)$。
+  2. **加权预测**：利用邻居对物品 `i` 的评分 $r_{vi}$，以相似度 $\text{sim}(u,v)$ 为权重进行加权平均。
   3. **过滤已交互**：排除用户历史已经产生过行为的物品。
-  4. **Top-N 排序**：对预测评分降序排列，取前 $N$ 个作为最终推荐列表。
+  4. **Top-N 排序**：对预测评分降序排列，取前 `N` 个作为最终推荐列表。
 
 #### 1.5 可视化分析与结果展示 (Visualization & Results)
 
@@ -197,25 +197,25 @@ Item-Based CF 并非根据物品属性（如颜色、品牌）计算相似度，
 
 * **代码位置**：`compute_item_similarity` 函数
 * **核心逻辑**：
-  计算物品 $i$ 和物品 $j$ 的相似度，看这两个物品是否经常被同一个用户一起购买/浏览。
+  计算物品 `i` 和物品 `j` 的相似度，看这两个物品是否经常被同一个用户一起购买/浏览。
 
 $$
-sim(i, j) = \\cos(\\vec{r}_i, \\vec{r}_j) = \\frac{\\sum_{u \\in U} r_{ui} r_{uj}}{\\sqrt{\\sum_{u \\in U} r_{ui}^2} \\sqrt{\\sum_{u \\in U} r_{uj}^2}}
+\text{sim}(i, j) = \cos(\vec{r}_i, \vec{r}_j) = \frac{\sum_{u \in U} r_{ui} r_{uj}}{\sqrt{\sum_{u \in U} r_{ui}^2} \sqrt{\sum_{u \in U} r_{uj}^2}}
 $$
 
-  其中 $\vec{r}_i$ 是物品 $i$ 在所有用户上的评分向量。
+  其中 $\vec{r}_i$ 是物品 `i` 在所有用户上的评分向量。
 
 #### 2.2 评分预测 (Prediction)
 
 * **代码位置**：`generate_item_based_recommendations` 函数
 * **预测公式**：
-  目标用户 $u$ 对未交互物品 $i$ 的预测评分 $P_{ui}$：
+  目标用户 `u` 对未交互物品 `i` 的预测评分 $P_{ui}$：
 
 $$
-P_{ui} = \\frac{\\sum_{j \\in N(i) \\cap I_u} sim(i, j) \\cdot r_{uj}}{\\sum_{j \\in N(i) \\cap I_u} |sim(i, j)|}
+P_{ui} = \frac{\sum_{j \in N(i) \cap I_u} sim(i, j) \cdot r_{uj}}{\sum_{j \in N(i) \cap I_u} |sim(i, j)|}
 $$
 
-  这里 $I_u$ 是用户 $u$ 已经交互过的物品集合，$N(i)$ 是物品 $i$ 的相似物品集合（Top-K）。
+  这里 $I_u$ 是用户 `u` 已经交互过的物品集合，$N(i)$ 是物品 `i` 的相似物品集合（Top-K）。
   简单来说，就是**用你过去喜欢的物品，去投票选出你可能喜欢的其他物品**。
 
 #### 2.3 可视化分析与结果展示 (Visualization & Results)
