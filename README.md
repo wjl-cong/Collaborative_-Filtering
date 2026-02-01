@@ -86,8 +86,7 @@
 
   其中权重 $w$ 映射如下：
 
-  -  浏览 (pv) = 1
-
+  * 浏览 (pv) = 1
   * 收藏 (fav) = 2
   * 加购 (cart) = 3
   * 购买 (buy) = 4
@@ -103,9 +102,9 @@
 
   $$
   R = \begin{bmatrix}
-  r_{11} & r_{12} & \cdots & r_{1n} \\
-  r_{21} & r_{22} & \cdots & r_{2n} \\
-  \vdots & \vdots & \ddots & \vdots \\
+  r_{11} & r_{12} & \cdots & r_{1n} \\\\
+  r_{21} & r_{22} & \cdots & r_{2n} \\\\
+  \vdots & \vdots & \ddots & \vdots \\\\
   r_{m1} & r_{m2} & \cdots & r_{mn}
   \end{bmatrix}
   $$
