@@ -81,7 +81,7 @@
   设用户 $u$ 对物品 $i$ 的行为类型为 $b_{ui}$，则评分 $r_{ui}$ 定义为：
 
   $$
-  r_{ui} = \sum w(b_{ui})
+  r_{ui} = \\sum w(b_{ui})
   $$
 
   其中权重 $w$ 映射如下：
@@ -98,15 +98,15 @@
 
 * **代码位置**：`build_user_item_matrix` 函数
 * **数学表示**：
-  构建矩阵 $R_{m \times n}$，其中 $m$ 为用户数，$n$ 为物品数。
+  构建矩阵 $R_{m \\times n}$，其中 $m$ 为用户数，$n$ 为物品数。
 
   $$
-  R = \begin{bmatrix}
-  r_{11} & r_{12} & \cdots & r_{1n} \\\\
-  r_{21} & r_{22} & \cdots & r_{2n} \\\\
-  \vdots & \vdots & \ddots & \vdots \\\\
-  r_{m1} & r_{m2} & \cdots & r_{mn}
-  \end{bmatrix}
+  R = \\begin{bmatrix}
+  r_{11} & r_{12} & \\cdots & r_{1n} \\\\
+  r_{21} & r_{22} & \\cdots & r_{2n} \\\\
+  \\vdots & \\vdots & \\ddots & \\vdots \\\\
+  r_{m1} & r_{m2} & \\cdots & r_{mn}
+  \\end{bmatrix}
   $$
 
   矩阵极其稀疏，未交互项填充为 $0$。
@@ -117,10 +117,10 @@
 
 * **代码位置**：`compute_user_similarity` 函数
 * **核心公式**：
-  设用户 $u$ 和用户 $v$ 的评分向量分别为 $\vec{r}_u$ 和 $\vec{r}_v$，其相似度 $sim(u,v)$ 为：
+  设用户 $u$ 和用户 $v$ 的评分向量分别为 $\\vec{r}_u$ 和 $\\vec{r}_v$，其相似度 $sim(u,v)$ 为：
 
   $$
-  sim(u, v) = \cos(\theta) = \frac{\vec{r}_u \cdot \vec{r}_v}{\|\vec{r}_u\| \|\vec{r}_v\|} = \frac{\sum_{i \in I} r_{ui} r_{vi}}{\sqrt{\sum_{i \in I} r_{ui}^2} \sqrt{\sum_{i \in I} r_{vi}^2}}
+  sim(u, v) = \\cos(\\theta) = \\frac{\\vec{r}_u \\cdot \\vec{r}_v}{\\|\\vec{r}_u\\| \\|\\vec{r}_v\\|} = \\frac{\\sum_{i \\in I} r_{ui} r_{vi}}{\\sqrt{\\sum_{i \\in I} r_{ui}^2} \\sqrt{\\sum_{i \\in I} r_{vi}^2}}
   $$
 
   其中 $I$ 是所有物品的集合。代码直接调用 `sklearn.metrics.pairwise.cosine_similarity` 高效实现矩阵运算。
