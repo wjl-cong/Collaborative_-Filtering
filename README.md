@@ -80,9 +80,9 @@
 * **建模公式**：
   设用户 $u$ 对物品 $i$ 的行为类型为 $b_{ui}$，则评分 $r_{ui}$ 定义为：
 
-  $$
-  r_{ui} = \\sum w(b_{ui})
-  $$
+$$
+r_{ui} = \sum w(b_{ui})
+$$
 
   其中权重 $w$ 映射如下：
 
@@ -100,14 +100,14 @@
 * **数学表示**：
   构建矩阵 $R_{m \\times n}$，其中 $m$ 为用户数，$n$ 为物品数。
 
-  $$
-  R = \\begin{bmatrix}
-  r_{11} & r_{12} & \\cdots & r_{1n} \\\\
-  r_{21} & r_{22} & \\cdots & r_{2n} \\\\
-  \\vdots & \\vdots & \\ddots & \\vdots \\\\
-  r_{m1} & r_{m2} & \\cdots & r_{mn}
-  \\end{bmatrix}
-  $$
+$$
+R = \begin{bmatrix}
+r_{11} & r_{12} & \cdots & r_{1n} \\
+r_{21} & r_{22} & \cdots & r_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+r_{m1} & r_{m2} & \cdots & r_{mn}
+\end{bmatrix}
+$$
 
   矩阵极其稀疏，未交互项填充为 $0$。
 
@@ -117,7 +117,7 @@
 
 * **代码位置**：`compute_user_similarity` 函数
 * **核心公式**：
-  设用户 $u$ 和用户 $v$ 的评分向量分别为 $\\vec{r}_u$ 和 $\\vec{r}_v$，其相似度 $sim(u,v)$ 为：
+  设用户 $u$ 和用户 $v$ 的评分向量分别为 $\vec{r}_u$ 和 $\vec{r}_v$，其相似度 $sim(u,v)$ 为：
 
   $$
   sim(u, v) = \\cos(\\theta) = \\frac{\\vec{r}_u \\cdot \\vec{r}_v}{\\|\\vec{r}_u\\| \\|\\vec{r}_v\\|} = \\frac{\\sum_{i \\in I} r_{ui} r_{vi}}{\\sqrt{\\sum_{i \\in I} r_{ui}^2} \\sqrt{\\sum_{i \\in I} r_{vi}^2}}
@@ -199,9 +199,9 @@ Item-Based CF 并非根据物品属性（如颜色、品牌）计算相似度，
 * **核心逻辑**：
   计算物品 $i$ 和物品 $j$ 的相似度，看这两个物品是否经常被同一个用户一起购买/浏览。
 
-  $$
-  sim(i, j) = \cos(\vec{r}_i, \vec{r}_j) = \frac{\sum_{u \in U} r_{ui} r_{uj}}{\sqrt{\sum_{u \in U} r_{ui}^2} \sqrt{\sum_{u \in U} r_{uj}^2}}
-  $$
+$$
+sim(i, j) = \cos(\vec{r}_i, \vec{r}_j) = \frac{\sum_{u \in U} r_{ui} r_{uj}}{\sqrt{\sum_{u \in U} r_{ui}^2} \sqrt{\sum_{u \in U} r_{uj}^2}}
+$$
 
   其中 $\vec{r}_i$ 是物品 $i$ 在所有用户上的评分向量。
 
