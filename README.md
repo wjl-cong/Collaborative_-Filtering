@@ -120,8 +120,8 @@ $$
   设用户 $u$ 和用户 $v$ 的评分向量分别为 $\vec{r}_u$ 和 $\vec{r}_v$，其相似度 $sim(u,v)$ 为：
 
   $$
-  sim(u, v) = \\cos(\\theta) = \\frac{\\vec{r}_u \\cdot \\vec{r}_v}{\\|\\vec{r}_u\\| \\|\\vec{r}_v\\|} = \\frac{\\sum_{i \\in I} r_{ui} r_{vi}}{\\sqrt{\\sum_{i \\in I} r_{ui}^2} \\sqrt{\\sum_{i \\in I} r_{vi}^2}}
-  $$
+sim(u, v) = \cos(\theta) = \frac{\vec{r}_u \cdot \vec{r}_v}{\|\vec{r}_u\| \|\vec{r}_v\|} = \frac{\sum_{i \in I} r_{ui} r_{vi}}{\sqrt{\sum_{i \in I} r_{ui}^2} \sqrt{\sum_{i \in I} r_{vi}^2}}
+$$
 
   其中 $I$ 是所有物品的集合。代码直接调用 `sklearn.metrics.pairwise.cosine_similarity` 高效实现矩阵运算。
 
@@ -211,9 +211,9 @@ $$
 * **预测公式**：
   目标用户 $u$ 对未交互物品 $i$ 的预测评分 $P_{ui}$：
 
-$$
-P_{ui} = \frac{\sum_{j \in N(i) \cap I_u} sim(i, j) \cdot r_{uj}}{\sum_{j \in N(i) \cap I_u} |sim(i, j)|}
-$$
+  $$
+  P_{ui} = \frac{\sum_{j \in N(i) \cap I_u} sim(i, j) \cdot r_{uj}}{\sum_{j \in N(i) \cap I_u} |sim(i, j)|}
+  $$
 
   这里 $I_u$ 是用户 $u$ 已经交互过的物品集合，$N(i)$ 是物品 $i$ 的相似物品集合（Top-K）。
   简单来说，就是**用你过去喜欢的物品，去投票选出你可能喜欢的其他物品**。
