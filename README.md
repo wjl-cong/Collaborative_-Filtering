@@ -211,9 +211,9 @@ $$
 * **预测公式**：
   目标用户 $u$ 对未交互物品 $i$ 的预测评分 $P_{ui}$：
 
-  $$
-  P_{ui} = \\frac{\\sum_{j \\in N(i) \\cap I_u} sim(i, j) \\cdot r_{uj}}{\\sum_{j \\in N(i) \\cap I_u} |sim(i, j)|}
-  $$
+$$
+P_{ui} = \frac{\sum_{j \in N(i) \cap I_u} sim(i, j) \cdot r_{uj}}{\sum_{j \in N(i) \cap I_u} |sim(i, j)|}
+$$
 
   这里 $I_u$ 是用户 $u$ 已经交互过的物品集合，$N(i)$ 是物品 $i$ 的相似物品集合（Top-K）。
   简单来说，就是**用你过去喜欢的物品，去投票选出你可能喜欢的其他物品**。
